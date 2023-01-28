@@ -13,9 +13,8 @@ def trans():
     lg = Translator(from_lang = "english", to_lang = menu.get())
     convert = lg.translate(entry1.get())
 
-    entry1 = Entry(root, bg = "#00283d", fg = "#84ceeb", highlightcolor = "#00283d")         #creating entry for taking input as text
-    entry1.place(x = 499, y = 400)
-
+    lb3 = Label(root, bg = "#00283d", fg = "#84ceeb", text = "dsfjdksf", font = "calibri")
+    lb3.place(y = 500, x = 500)
     
 
 root.title("testing tkinter")
