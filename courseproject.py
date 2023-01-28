@@ -14,7 +14,7 @@ def trans():
     convert = lg.translate(entry1.get())
 
     lb3 = Label(root, bg = "#00283d", fg = "#84ceeb", text = "dsfjdksf", font = "calibri")
-    lb3.place(y = 330, anchor = N)
+    lb3.place(y = 330, x = 500)
     
 
 root.title("testing tkinter")
