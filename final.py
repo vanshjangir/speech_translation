@@ -1,105 +1,100 @@
-#--------------Importing libraries-----------------
-from tkinter import *
+#--------------------------------------------------------Importing libraries---------------------------------------------------------------
+from customtkinter import *
 import speech_recognition as sr
 from googletrans import Translator
+from PIL import Image,ImageTk
 
-#-------------------Backend------------------------
 
+
+
+
+
+#---------------------------------------------------------------Backend--------------------------------------------------------------------
+
+# creating obejcts for Transator and Recognizer classes
 r = sr.Recognizer()
 t = Translator()
 
+# function for taking speech input and converting it into text(english)
 def speech():
-     global r
-     global entry
-     global lbO
-     global lbT
 
-     entry.delete(0,END)
-     with sr.Microphone() as source:
+     textbox.delete("0.0" , "end")
+     with sr.Microphone() as source: # using microphone as input
         audio = r.listen(source)
 
         try:
-            entry.insert(END , r.recognize_google(audio))
+            textbox.insert(END , r.recognize_google(audio)) # updating recognized text in textbox
         except:
-            pass
+            textbox.insert(END , "try again")
 
 
+
+# function for translation in different langauges
 def translate():
-    global entry
-    global lbT
-    global menu1
-    global menu2
-
-    O_result = t.translate(str(entry.get()) , dest = str(menu1.get()))
-    lbO.configure(text = O_result.text)
-
-    T_result = t.translate(str(entry.get()), src = str(menu1.get()), dest = str(menu2.get()))
-    lbT.configure(text = T_result.text)
-        
-
-def reset():
-    global entry
-    global lbO
-    global lbT
-    entry.delete(0 , END)
-    lbO.configure(text = " ")
-    lbT.configure(text = " ")
 
 
+    # translating textbox text form langauge in menu1 to language in menu2
+    T_result = t.translate(str(textbox.get("0.0" , "end")), src = str(menu1.get()), dest = str(menu2.get())) 
 
-#-------------------GUI CODE-----------------------
+    # updating text in label (frame)  
+    lbL.configure(text = T_result.text)  
+    print(T_result.text)
 
-
-root = Tk()
-root.title("Translator")
-root.geometry("800x500")
-root["background"] = "#002349"
-
-
-lbH = Label(root, bg = "#002349", fg = "#ffffff", text = "Translator" , font = ("calibri", 25))
-lbH.place(x = 331, y = 50)
-
-entry = Entry(root, bg = "#ffffff", fg = "#002349",font = ("calibri", 15), width = 54)
-entry.place(x = 100, y = 150)
-
-photo = PhotoImage(file = r"C:\Users\This Pc\Desktop\python course project\micicon.png")
-photocustom = photo.subsample(10,10)
-
-btn = Button(root, image = photocustom, fg = "#957c3d", command = speech)
-btn.place(x = 650, y = 150, width = 50, height = 28)
-
-frame1 = Frame(root, borderwidth = 1, bg = "#ffffff")
-frame1.place(x = 100, y = 220, height = 200, width = 295)
-
-frame2 = Frame(root, borderwidth = 1, bg = "#ffffff")
-frame2.place(x = 405, y = 220, height = 200, width = 295)
+#-------------------------------------------------------------GUI CODE---------------------------------------------------------------------
 
 
+# list of languages
 langlist = ['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'basque', 'belarusian', 'bengali', 'bosnian', 'bulgarian', 'catalan', 'cebuano', 'chichewa', 'chinese (simplified)', 'chinese (traditional)', 'corsican', 'croatian', 'czech', 'danish', 'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian', 'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian', 'hebrew', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish', 'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish (kurmanji)', 'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy', 'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali', 'norwegian', 'odia', 'pashto', 'persian', 'polish', 'portuguese', 'punjabi', 'romanian', 'russian', 'samoan', 'scots gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhala', 'slovak', 'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu', 'thai', 'turkish', 'ukrainian', 'urdu', 'uyghur', 'uzbek', 'vietnamese', 'welsh', 'xhosa', 'yiddish', 'yoruba', 'zulu']
 
-menu1 = StringVar()                                                                      
-menu1.set("english")
-drop1 = OptionMenu(frame1, menu1, *langlist)
-drop1.configure(bg = "#ffffff" , fg = "#002349" , font = "calibri" , borderwidth = 0)
-drop1.place(x = 10, y = 10)
 
-menu2 = StringVar()                                                                      
-menu2.set("spanish")
-drop2 = OptionMenu(frame2, menu2, *langlist)
-drop2.configure(bg = "#ffffff" , fg = "#002349" , font = "calibri" , borderwidth = 0)
-drop2.place(x = 10, y = 10)
+set_appearance_mode("system")
+set_default_color_theme("blue")
 
 
-lbO = Label(frame1, bg = "#ffffff", fg = "#002349", font = "calibri")
-lbO.place(x = 10, y = 50)
+root = CTk()
+root.geometry("800x500")
+root.title("Tranlator")
 
-lbT = Label(frame2, bg = "#ffffff", fg = "#002349", font = "calibri")
-lbT.place(x = 10, y = 50)
-
-
-bt = Button(root, text = "translate", bg = "#002349", fg = "#ffffff", font = "calibri", borderwidth = 0, activebackground = "#002349", command = translate)
-bt.place(x = 356,y = 430)
+# Title label
+lbL = CTkLabel(master = root, text = "Translator", font = ("cascadia code", 25))
+lbL.place(x = 330, y = 50)
 
 
+# dropdown menus for languages
+menu1 = CTkOptionMenu(master = root, values = langlist, width = 295, variable = StringVar(value = "english"), font = ("cascadia code", 15))
+menu1.place(x = 85, y = 150)
+
+menu2 = CTkOptionMenu(master = root, values = langlist, width = 295, variable = StringVar(value = "hindi"), font = ("cascadia code", 15))
+menu2.place(x = 420, y = 150)
+
+
+# textbox for providing text
+textbox = CTkTextbox(master = root, width = 295, height = 200, font = ("cascadia code", 20), border_width = 1)
+textbox.configure(fg_color = root._fg_color)
+textbox.place(x = 85, y = 200)
+
+
+# label in a frame to show translated text
+frame = CTkFrame(root, width = 295, height = 200, border_width = 1)
+frame.place(x = 420, y = 200)
+
+#label for 
+lbL = CTkLabel(master = frame, font = ("cascadia code", 20), text = "")
+lbL.place(x = 10, y = 10)
+
+# importing image to use on microphone button
+img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\python course project\darkmic.jpg") , size = (25,25))
+img.configure(fg_color = root._fg_color)
+
+
+# microphone button to call speech function
+btM = CTkButton(master = root, text = "", width = 15, image = img, fg_color = "#242424", hover_color = "#242424", corner_radius = 15,command = speech)
+btM.place(x = 90, y = 346)
+
+
+# translate button to call translate function
+btT = CTkButton(master = root, width = 40, text = "translate", font = ("cascadia code", 15), corner_radius = 30, command = translate)
+btT.place(x = 160, y = 350)
+
+# main loop of tkinter window
 root.mainloop()
-
