@@ -1,11 +1,9 @@
 #--------------------------------------------------------Importing libraries---------------------------------------------------------------
 from customtkinter import *
+from tkinter import *
 import speech_recognition as sr
 from googletrans import Translator
 from PIL import Image,ImageTk
-
-
-
 
 
 
@@ -34,10 +32,11 @@ def translate():
 
 
     # translating textbox text form langauge in menu1 to language in menu2
-    T_result = t.translate(str(textbox.get("0.0" , "end")), src = str(menu1.get()), dest = str(menu2.get())) 
+    T_result = t.translate(str(textbox.get("0.0" , "end")), src = str(menu1.get()), dest = str(menu2.get()))         
 
-    # updating text in label (frame)  
-    lbL.configure(text = T_result.text)  
+    # updating text in Text widget (frame) 
+    txt.delete("1.0" , "end") 
+    txt.insert(END, T_result.text) 
     print(T_result.text)
 
 #-------------------------------------------------------------GUI CODE---------------------------------------------------------------------
@@ -56,8 +55,8 @@ root.geometry("800x500")
 root.title("Tranlator")
 
 # Title label
-lbL = CTkLabel(master = root, text = "Translator", font = ("cascadia code", 25))
-lbL.place(x = 330, y = 50)
+lbT = CTkLabel(master = root, text = "Translator", font = ("cascadia code", 25))
+lbT.place(x = 330, y = 50)
 
 
 # dropdown menus for languages
@@ -75,12 +74,11 @@ textbox.place(x = 85, y = 200)
 
 
 # label in a frame to show translated text
-frame = CTkFrame(root, width = 295, height = 200, border_width = 1)
+frame = CTkFrame(master = root, width = 295, height = 200, border_width = 1)
 frame.place(x = 420, y = 200)
 
-#label for 
-lbL = CTkLabel(master = frame, font = ("cascadia code", 20), text = "")
-lbL.place(x = 10, y = 10)
+txt = Text(master = frame, font = ("cascadia code", 20), width = 26, height = 4, bg = "#2b2b2b", fg = "#ffffff", borderwidth = 0)
+txt.place(x = 10, y = 10)
 
 # importing image to use on microphone button
 img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\python course project\darkmic.jpg") , size = (25,25))
