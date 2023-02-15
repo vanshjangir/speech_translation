@@ -52,7 +52,7 @@ set_default_color_theme("blue")
 
 root = CTk()
 root.geometry("800x500")
-root.title("Tranlator")
+root.title("Translator")
 
 # Title label
 lbT = CTkLabel(master = root, text = "Translator", font = ("cascadia code", 25))
@@ -81,7 +81,7 @@ txt = Text(master = frame, font = ("cascadia code", 20), width = 26, height = 4,
 txt.place(x = 10, y = 10)
 
 # importing image to use on microphone button
-img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\python course project\darkmic.jpg") , size = (25,25))
+img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\python course project\mic.jpg") , size = (25,25))
 img.configure(fg_color = root._fg_color)
 
 
