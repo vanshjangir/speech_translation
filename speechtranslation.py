@@ -35,7 +35,7 @@ def translate():
     T_result = t.translate(str(textbox.get("0.0" , "end")), src = str(menu1.get()), dest = str(menu2.get()))         
 
     # updating text in Text widget (frame) 
-    txt.delete("1.0" , "end") 
+    txt.delete("1.0" , "end")
     txt.insert(END, T_result.text) 
     print(T_result.text)
 
@@ -81,7 +81,7 @@ txt = Text(master = frame, font = ("cascadia code", 20), width = 26, height = 4,
 txt.place(x = 10, y = 10)
 
 # importing image to use on microphone button
-img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\python course project\mic.jpg") , size = (25,25))
+img = CTkImage(Image.open(r"C:\Users\This Pc\Desktop\vansh\python course project\mic.jpg") , size = (25,25))
 img.configure(fg_color = root._fg_color)
 
 
